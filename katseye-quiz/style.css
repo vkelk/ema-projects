@@ -1,0 +1,654 @@
+/* ============================================================
+   KATSEYE QUIZ — Ema's Game Studio
+   Colors inspired by Katseye's holographic, Y2K aesthetic!
+   ============================================================ */
+
+/* --- Fonts & Reset --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --- Background: deep purple night sky --- */
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0d0020 0%, #1a0035 40%, #0a001a 100%);
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* --- Floating stars --- */
+.stars-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 3s infinite alternate;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.1; transform: scale(0.8); }
+  to   { opacity: 1;   transform: scale(1.2); }
+}
+
+/* --- Screen wrapper --- */
+.screen {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 640px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* --- Card --- */
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 150, 255, 0.25);
+  border-radius: 28px;
+  padding: 36px 32px;
+  width: 100%;
+  box-shadow:
+    0 0 40px rgba(200, 50, 255, 0.2),
+    0 0 80px rgba(255, 100, 200, 0.1),
+    inset 0 0 20px rgba(255, 255, 255, 0.04);
+}
+
+/* ============================================================
+   START SCREEN
+   ============================================================ */
+
+.start-card {
+  text-align: center;
+}
+
+.gem-icon {
+  font-size: 3.5rem;
+  margin-bottom: 4px;
+  display: block;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%   { transform: translateY(0px);   }
+  50%  { transform: translateY(-10px); }
+  100% { transform: translateY(0px);   }
+}
+
+.title {
+  font-size: 3.8rem;
+  font-weight: 900;
+  letter-spacing: 8px;
+  background: linear-gradient(90deg, #ff6eff, #ff9eff, #c27aff, #ff6eff);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3s linear infinite;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 180, 255, 0.8);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-top: 2px;
+  margin-bottom: 20px;
+}
+
+@keyframes shimmer {
+  to { background-position: 200% center; }
+}
+
+/* --- Group photo --- */
+.group-photo-wrapper {
+  width: 100%;
+  height: 220px;
+  border-radius: 18px;
+  overflow: hidden;
+  margin: 0 auto 20px;
+  border: 2px solid rgba(200, 100, 255, 0.5);
+  box-shadow: 0 0 30px rgba(200, 50, 255, 0.4);
+  background: linear-gradient(135deg, #1a0035, #3d0070);
+}
+
+.group-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+.group-photo.small {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  object-position: center 20%;
+  border-radius: 14px;
+}
+
+.photo-fallback {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  gap: 10px;
+  color: rgba(255, 180, 255, 0.8);
+  text-align: center;
+  line-height: 1.6;
+}
+
+.photo-fallback p {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* --- Intro text --- */
+.intro-text {
+  font-size: 1rem;
+  color: rgba(255, 200, 255, 0.85);
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+
+/* --- Member tags --- */
+.members-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.member-tag {
+  background: rgba(200, 100, 255, 0.2);
+  border: 1px solid rgba(200, 100, 255, 0.4);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* --- Main button --- */
+.btn-main {
+  background: linear-gradient(135deg, #d633ff, #ff3399);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 16px 44px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 6px 30px rgba(200, 50, 255, 0.5);
+  margin-top: 4px;
+}
+
+.btn-main:hover {
+  transform: scale(1.06);
+  box-shadow: 0 8px 40px rgba(200, 50, 255, 0.75);
+}
+
+.btn-main:active {
+  transform: scale(0.97);
+}
+
+/* ============================================================
+   QUIZ SCREEN
+   ============================================================ */
+
+.quiz-card {
+  text-align: center;
+}
+
+/* --- Header row --- */
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  color: rgba(255, 180, 255, 0.7);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.score-display {
+  background: rgba(200, 100, 255, 0.2);
+  border: 1px solid rgba(200, 100, 255, 0.4);
+  border-radius: 999px;
+  padding: 4px 14px;
+  font-size: 0.85rem;
+}
+
+/* --- Progress bar --- */
+.progress-bar-wrap {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  height: 6px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #ff3399, #d633ff);
+  height: 100%;
+  border-radius: 999px;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+
+/* --- Small gem --- */
+.gem-small {
+  font-size: 1.6rem;
+  margin-bottom: 12px;
+}
+
+/* --- Question text --- */
+.question-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: white;
+  line-height: 1.5;
+  min-height: 70px;
+  margin-bottom: 24px;
+}
+
+/* --- Answer buttons grid --- */
+.answers-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.answer-btn {
+  background: rgba(255, 255, 255, 0.07);
+  border: 2px solid rgba(200, 100, 255, 0.3);
+  border-radius: 16px;
+  padding: 16px 12px;
+  color: white;
+  font-size: 0.92rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  line-height: 1.4;
+  min-height: 70px;
+}
+
+.answer-btn:hover:not(:disabled) {
+  background: rgba(200, 100, 255, 0.25);
+  border-color: rgba(200, 100, 255, 0.7);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(200, 50, 255, 0.35);
+}
+
+.answer-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Correct answer highlight */
+.answer-btn.correct {
+  background: rgba(50, 220, 130, 0.25);
+  border-color: #32dc82;
+  color: #aaffcc;
+  box-shadow: 0 0 20px rgba(50, 220, 130, 0.4);
+}
+
+/* Wrong answer highlight */
+.answer-btn.wrong {
+  background: rgba(255, 60, 100, 0.25);
+  border-color: #ff3c64;
+  color: #ffaabb;
+  box-shadow: 0 0 20px rgba(255, 60, 100, 0.4);
+}
+
+/* Disabled state */
+.answer-btn:disabled {
+  cursor: default;
+}
+
+/* --- Feedback box --- */
+.feedback-box {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(200, 100, 255, 0.3);
+  border-radius: 16px;
+  padding: 16px 20px;
+  margin-top: 8px;
+  text-align: center;
+}
+
+.feedback-box p {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: rgba(255, 220, 255, 0.9);
+}
+
+/* --- Next button --- */
+.btn-next {
+  background: linear-gradient(135deg, #9933ff, #cc33ff);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 30px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 20px rgba(150, 50, 255, 0.4);
+}
+
+.btn-next:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 28px rgba(150, 50, 255, 0.6);
+}
+
+/* ============================================================
+   RESULT SCREEN
+   ============================================================ */
+
+.result-card {
+  text-align: center;
+}
+
+.result-emoji {
+  font-size: 4rem;
+  margin-bottom: 8px;
+  animation: float 2.5s ease-in-out infinite;
+}
+
+.result-title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #ff6eff, #ff9eff, #c27aff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+
+.result-score {
+  font-size: 2rem;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 6px;
+}
+
+.result-message {
+  color: rgba(255, 200, 255, 0.85);
+  font-size: 1rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+/* --- Score bar --- */
+.score-bar-wrap {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  height: 14px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.score-bar {
+  background: linear-gradient(90deg, #ff3399, #d633ff, #9933ff);
+  height: 100%;
+  border-radius: 999px;
+  width: 0%;
+  transition: width 1s ease;
+}
+
+.result-group-pic {
+  margin-bottom: 22px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 2px solid rgba(200, 100, 255, 0.4);
+  box-shadow: 0 0 30px rgba(200, 50, 255, 0.3);
+}
+
+/* ============================================================
+   NAME INPUT
+   ============================================================ */
+
+.name-input-wrap {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.name-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgba(220, 160, 255, 0.9);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.name-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.07);
+  border: 2px solid rgba(200, 100, 255, 0.4);
+  border-radius: 14px;
+  padding: 14px 18px;
+  color: white;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.name-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 400;
+}
+
+.name-input:focus {
+  border-color: rgba(200, 100, 255, 0.9);
+  box-shadow: 0 0 20px rgba(180, 50, 255, 0.3);
+}
+
+.name-error {
+  color: #ff6699;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+/* --- Two-button rows --- */
+.start-buttons,
+.result-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+/* --- Secondary button --- */
+.btn-secondary {
+  background: transparent;
+  color: rgba(200, 140, 255, 0.9);
+  border: 2px solid rgba(200, 100, 255, 0.4);
+  border-radius: 999px;
+  padding: 12px 34px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background: rgba(200, 100, 255, 0.15);
+  border-color: rgba(200, 100, 255, 0.8);
+  transform: scale(1.04);
+}
+
+/* ============================================================
+   LEADERBOARD
+   ============================================================ */
+
+.leaderboard-card {
+  text-align: center;
+}
+
+.lb-title {
+  font-size: 2rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 2.5s linear infinite;
+  margin-bottom: 4px;
+}
+
+.lb-subtitle {
+  font-size: 0.85rem;
+  color: rgba(255, 200, 255, 0.7);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+
+/* The list of scores */
+.lb-list {
+  margin-bottom: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Each row in the leaderboard */
+.lb-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(200, 100, 255, 0.2);
+  border-radius: 14px;
+  padding: 12px 16px;
+  transition: transform 0.15s;
+}
+
+.lb-row:hover {
+  transform: translateX(4px);
+}
+
+/* Gold, silver, bronze for top 3 */
+.lb-row.rank-1 { border-color: rgba(255, 215, 0, 0.5);  background: rgba(255, 215, 0, 0.08); }
+.lb-row.rank-2 { border-color: rgba(192, 192, 192, 0.5); background: rgba(192, 192, 192, 0.07); }
+.lb-row.rank-3 { border-color: rgba(205, 127, 50, 0.5);  background: rgba(205, 127, 50, 0.07); }
+
+.lb-rank {
+  font-size: 1.2rem;
+  min-width: 30px;
+  text-align: center;
+}
+
+.lb-name {
+  flex: 1;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+  color: white;
+}
+
+.lb-score {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: rgba(200, 160, 255, 0.9);
+  white-space: nowrap;
+}
+
+/* Empty state */
+.lb-empty {
+  color: rgba(255, 200, 255, 0.5);
+  font-size: 0.95rem;
+  padding: 20px 0;
+}
+
+/* ============================================================
+   BRAND LABEL
+   ============================================================ */
+
+.brand-label {
+  position: fixed;
+  bottom: 16px;
+  right: 20px;
+  z-index: 100;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(200, 100, 255, 0.35);
+  border-radius: 999px;
+  padding: 6px 16px;
+  color: rgba(220, 160, 255, 0.85);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 14px rgba(180, 50, 255, 0.2);
+  pointer-events: none;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 480px) {
+  .card {
+    padding: 26px 20px;
+  }
+
+  .title {
+    font-size: 2.8rem;
+    letter-spacing: 5px;
+  }
+
+  .answers-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question-text {
+    font-size: 1rem;
+  }
+}

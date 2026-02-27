@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' https://www.gstatic.com;
+                 connect-src https://*.firebaseio.com https://*.googleapis.com;
+                 img-src 'self' https://upload.wikimedia.org data:;
+                 style-src 'self' 'unsafe-inline';" />
+  <title>Ema's KATSEYE Quiz ✨</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Floating stars in the background -->
+  <div class="stars-container" id="starsContainer"></div>
+
+  <!-- ===== START SCREEN ===== -->
+  <div class="screen" id="startScreen">
+    <div class="card start-card">
+      <div class="gem-icon">💎</div>
+      <h1 class="title">KATSEYE</h1>
+      <p class="subtitle">Ultimate Fan Quiz</p>
+
+      <div class="group-photo-wrapper">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Katseye_in_May_2025.jpg/600px-Katseye_in_May_2025.jpg"
+          alt="Katseye group photo"
+          class="group-photo"
+          onerror="this.style.display='none'; document.getElementById('photoFallback').style.display='flex';"
+        />
+        <div id="photoFallback" class="photo-fallback" style="display:none;">
+          <span>🎤✨🎶</span>
+          <p>Daniela · Lara · Manon<br/>Megan · Sophia · Yoonchae</p>
+        </div>
+      </div>
+
+      <p class="intro-text">
+        How well do you know the girls? 🐱<br/>
+        Answer <strong>15 questions</strong> and find out!
+      </p>
+
+      <div class="members-list">
+        <span class="member-tag">💜 Daniela</span>
+        <span class="member-tag">🩷 Lara</span>
+        <span class="member-tag">🤍 Manon</span>
+        <span class="member-tag">💙 Megan</span>
+        <span class="member-tag">💛 Sophia</span>
+        <span class="member-tag">🩵 Yoonchae</span>
+      </div>
+
+      <div class="name-input-wrap">
+        <label class="name-label" for="nameInput">What's your name? 🐱</label>
+        <input type="text" id="nameInput" class="name-input" placeholder="Enter your name..." maxlength="20" />
+        <p class="name-error hidden" id="nameError">Please enter your name first! ✨</p>
+      </div>
+
+      <div class="start-buttons">
+        <button class="btn-main" id="startBtn">Let's Go! ✨</button>
+        <button class="btn-secondary" id="lbOpenBtn">🏆 Leaderboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== QUIZ SCREEN ===== -->
+  <div class="screen hidden" id="quizScreen">
+    <div class="card quiz-card">
+
+      <div class="quiz-header">
+        <div class="progress-info">
+          <span id="questionCounter">Question 1 of 15</span>
+        </div>
+        <div class="score-display">Score: <span id="liveScore">0</span></div>
+      </div>
+
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <div class="gem-small">💎</div>
+
+      <p class="question-text" id="questionText">Loading...</p>
+
+      <div class="answers-grid" id="answersGrid">
+        <button class="answer-btn" id="ans0"></button>
+        <button class="answer-btn" id="ans1"></button>
+        <button class="answer-btn" id="ans2"></button>
+        <button class="answer-btn" id="ans3"></button>
+      </div>
+
+      <div class="feedback-box hidden" id="feedbackBox">
+        <p id="feedbackText"></p>
+        <button class="btn-next" id="nextBtn">Next ➡️</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== RESULT SCREEN ===== -->
+  <div class="screen hidden" id="resultScreen">
+    <div class="card result-card">
+      <div class="result-emoji" id="resultEmoji">🎉</div>
+      <h2 class="result-title" id="resultTitle">You're a true Katseye fan!</h2>
+      <p class="result-score" id="resultScore">You got 15 out of 15!</p>
+      <p class="result-message" id="resultMessage">Amazing!</p>
+
+      <div class="score-bar-wrap">
+        <div class="score-bar" id="scoreBar"></div>
+      </div>
+
+      <div class="result-group-pic">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Katseye_in_May_2025.jpg/600px-Katseye_in_May_2025.jpg"
+          alt="Katseye"
+          class="group-photo small"
+          onerror="this.style.display='none';"
+        />
+      </div>
+
+      <div class="result-buttons">
+        <button class="btn-main" id="playAgainBtn">Play Again! 🔄</button>
+        <button class="btn-secondary" id="lbOpenBtn2">🏆 Leaderboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== LEADERBOARD SCREEN ===== -->
+  <div class="screen hidden" id="leaderboardScreen">
+    <div class="card leaderboard-card">
+      <div class="gem-icon">🏆</div>
+      <h2 class="lb-title">Leaderboard</h2>
+      <p class="lb-subtitle">Top Katseye Fans</p>
+
+      <div id="lbList" class="lb-list">
+        <!-- Scores are added here by JavaScript -->
+      </div>
+
+      <button class="btn-secondary" id="lbBackBtn">⬅️ Back</button>
+    </div>
+  </div>
+
+  <!-- Brand label — made by Ema! -->
+  <div class="brand-label">🎮 Ema's Games</div>
+
+  <!-- Firebase SDK (the free database service) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+
+  <!-- Firebase config — this file is gitignored so credentials stay private -->
+  <script src="firebase-config.js"></script>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Claude Code
+.claude/settings.local.json
+
+# Firebase config (contains real credentials — never commit this)
+firebase-config.js
+
+# Playwright MCP logs
+.playwright-mcp/
+
+# Logs
+*.log
