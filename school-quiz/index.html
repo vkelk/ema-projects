@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 script-src 'self' 'unsafe-inline' https://www.gstatic.com https://*.europe-west1.firebasedatabase.app;
+                 connect-src https://*.firebaseio.com wss://*.firebaseio.com https://*.googleapis.com https://*.europe-west1.firebasedatabase.app wss://*.europe-west1.firebasedatabase.app;
+                 img-src 'self' data:;
+                 style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+                 font-src 'self' https://fonts.gstatic.com;" />
+  <title>Училишен Квиз - 4то Одделение ✨</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Плови ѕвезди во позадина -->
+  <div class="stars-container" id="starsContainer"></div>
+
+  <!-- ===== ПОЧЕТЕН ЕКРАН ===== -->
+  <div class="screen" id="startScreen">
+    <div class="card start-card">
+      <div class="gem-icon">📚</div>
+      <h1 class="title">УЧИЛИШЕН КВИЗ</h1>
+      <p class="subtitle">4то Одделение</p>
+
+      <p class="intro-text">
+        Колку добро го знаеш учебниот материјал? 🧠<br/>
+        Одговори на <strong>15 прашања</strong> и дознај!
+      </p>
+
+      <div class="name-input-wrap">
+        <label class="name-label" for="nameInput">Како се викаш? 🐱</label>
+        <input type="text" id="nameInput" class="name-input" placeholder="Внеси го твоето име..." maxlength="20" />
+        <p class="name-error hidden" id="nameError">Прво внеси го твоето име! ✨</p>
+      </div>
+
+      <div class="start-buttons">
+        <button class="btn-main" id="startBtn">Напред! ✨</button>
+        <button class="btn-secondary" id="lbOpenBtn">🏆 Табела на резултати</button>
+        <button class="btn-link" id="aboutBtn">ℹ️ За квизот</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ИЗБОР НА ПРЕДМЕТ ===== -->
+  <div class="screen hidden" id="subjectScreen">
+    <div class="card subject-card">
+      <div class="gem-icon">🎯</div>
+      <h2 class="subject-title">Избери предмет</h2>
+      <p class="subject-subtitle">За кој предмет сакаш да се испрашаш?</p>
+
+      <div class="subject-grid">
+        <button class="subject-btn" id="btnNaturalScience">
+          <span class="subject-icon">🔬</span>
+          <span class="subject-name">Природни науки</span>
+          <span class="subject-desc">Електрицитет и Магнетизам</span>
+        </button>
+        <button class="subject-btn" id="btnHistory">
+          <span class="subject-icon">🌍</span>
+          <span class="subject-name">Историја и општество</span>
+          <span class="subject-desc">Средината во која живеам</span>
+        </button>
+      </div>
+
+      <button class="btn-secondary" id="subjectBackBtn">⬅️ Назад</button>
+    </div>
+  </div>
+
+  <!-- ===== КВИЗ ЕКРАН ===== -->
+  <div class="screen hidden" id="quizScreen">
+    <div class="card quiz-card">
+
+      <div class="quiz-header">
+        <div class="progress-info">
+          <span id="questionCounter">Прашање 1 од 15</span>
+        </div>
+        <div class="score-display">Поени: <span id="liveScore">0</span></div>
+      </div>
+
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <div class="subject-badge" id="subjectBadge">🔬 Природни науки</div>
+
+      <p class="question-text" id="questionText">Вчитување...</p>
+
+      <div class="answers-grid" id="answersGrid">
+        <button class="answer-btn" id="ans0"></button>
+        <button class="answer-btn" id="ans1"></button>
+        <button class="answer-btn" id="ans2"></button>
+        <button class="answer-btn" id="ans3"></button>
+      </div>
+
+      <div class="feedback-box hidden" id="feedbackBox">
+        <p id="feedbackText"></p>
+        <button class="btn-next" id="nextBtn">Следно ➡️</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== ЕКРАН СО РЕЗУЛТАТ ===== -->
+  <div class="screen hidden" id="resultScreen">
+    <div class="card result-card">
+      <div class="result-emoji" id="resultEmoji">🎉</div>
+      <h2 class="result-title" id="resultTitle">Браво!</h2>
+      <p class="result-score" id="resultScore">Точни 15 од 15!</p>
+      <p class="result-message" id="resultMessage">Одлично!</p>
+
+      <div class="score-bar-wrap">
+        <div class="score-bar" id="scoreBar"></div>
+      </div>
+
+      <div class="result-buttons">
+        <button class="btn-main" id="playAgainBtn">Играј повторно! 🔄</button>
+        <button class="btn-secondary" id="changSubjectBtn">📚 Смени предмет</button>
+        <button class="btn-secondary" id="lbOpenBtn2">🏆 Табела на резултати</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ТАБЕЛА НА РЕЗУЛТАТИ ===== -->
+  <div class="screen hidden" id="leaderboardScreen">
+    <div class="card leaderboard-card">
+      <div class="gem-icon">🏆</div>
+      <h2 class="lb-title">Табела на резултати</h2>
+      <p class="lb-subtitle">Најдобри ученици</p>
+
+      <div class="lb-tabs">
+        <button class="lb-tab active" id="tabNauka" data-subject="nauka">🔬 Природни науки</button>
+        <button class="lb-tab" id="tabHistorija" data-subject="istorija">🌍 Историја</button>
+      </div>
+
+      <div id="lbList" class="lb-list">
+        <!-- Резултатите се додаваат тука со JavaScript -->
+      </div>
+
+      <button class="btn-secondary" id="lbBackBtn">⬅️ Назад</button>
+    </div>
+  </div>
+
+  <!-- ===== ЗА КВИЗОТ ===== -->
+  <div class="screen hidden" id="aboutScreen">
+    <div class="card about-card">
+      <div class="gem-icon">ℹ️</div>
+      <h2 class="about-title">За квизот</h2>
+
+      <div class="about-stats">
+        <div class="stat-row">
+          <span class="stat-icon">🔬</span>
+          <span class="stat-label">Природни науки</span>
+          <span class="stat-count" id="naukaCount">—</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-icon">🌍</span>
+          <span class="stat-label">Историја и општество</span>
+          <span class="stat-count" id="istorijaCount">—</span>
+        </div>
+      </div>
+
+      <div class="about-disclaimer">
+        <p>Овој квиз е наменет за ученици од <strong>4то одделение</strong>. Прашањата се засноваат на наставниот материјал по Природни науки (тема: Електрицитет и Магнетизам) и Историја и општество (тема: Средината во која живеам).</p>
+        <p>Секоја игра избира <strong>15 случајни прашања</strong> од банката на прашања.</p>
+        <p class="about-credit">Создадено со 💚 од Ема's Game Studio</p>
+      </div>
+
+      <button class="btn-secondary" id="aboutBackBtn">⬅️ Назад</button>
+    </div>
+  </div>
+
+  <!-- Лабел - направено од Ема! -->
+  <div class="brand-label">🎮 Ема's Games</div>
+
+  <!-- Firebase SDK (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+  <!-- Firebase конфигурација - пополни ги вредностите! -->
+  <script src="firebase-config.js"></script>
+
+  <script src="questions.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

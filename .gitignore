@@ -12,7 +12,7 @@ desktop.ini
 # Claude Code
 .claude/settings.local.json
 
-# Firebase config (contains real credentials — never commit this)
+# Firebase config (contains real credentials - never commit this)
 firebase-config.js
 
 # Playwright MCP logs
