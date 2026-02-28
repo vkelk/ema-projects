@@ -10,11 +10,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* --- Позадина: длабоко темно-зелена/сина --- */
 body {
   min-height: 100vh;
+  min-height: 100dvh;
   background: linear-gradient(135deg, #001a0d 0%, #002a1a 40%, #001520 100%);
   font-family: 'Poppins', sans-serif;
   color: white;
@@ -23,6 +25,7 @@ body {
   justify-content: center;
   overflow-x: hidden;
   position: relative;
+  overscroll-behavior-y: contain;
 }
 
 /* --- Плови ѕвезди --- */
@@ -57,8 +60,11 @@ body {
   padding: 20px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   min-height: 100vh;
+  min-height: 100dvh;
+  padding-top: 32px;
+  padding-bottom: 32px;
 }
 
 .hidden {
@@ -778,7 +784,7 @@ body {
 
 @media (max-width: 480px) {
   .card {
-    padding: 26px 20px;
+    padding: 24px 18px;
   }
 
   .title {
@@ -796,6 +802,55 @@ body {
 
   .lb-tabs {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+  }
+
+  .lb-tab {
+    text-align: center;
+    padding: 12px 18px;
+  }
+
+  /* Full-width buttons for easier tapping */
+  .btn-main,
+  .btn-secondary,
+  .btn-next {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .start-buttons,
+  .result-buttons {
+    align-items: stretch;
+  }
+
+  /* Bigger answer buttons on small screens */
+  .answer-btn {
+    min-height: 56px;
+    font-size: 0.9rem;
+  }
+
+  /* Prevent layout shift from hover transforms */
+  .subject-btn:hover,
+  .btn-main:hover,
+  .btn-secondary:hover {
+    transform: none;
+  }
+}
+
+/* Disable hover effects on touch-only devices to prevent sticky hover */
+@media (hover: none) {
+  .subject-btn:hover,
+  .answer-btn:hover:not(:disabled),
+  .btn-next:hover,
+  .btn-main:hover,
+  .btn-secondary:hover,
+  .lb-tab:hover:not(.active),
+  .lb-row:hover,
+  .btn-link:hover {
+    transform: none;
+    background: initial;
+    border-color: initial;
+    box-shadow: initial;
+    color: initial;
   }
 }

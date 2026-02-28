@@ -287,9 +287,9 @@ function renderLeaderboard(subject) {
       }
 
       const medals = ["🥇", "🥈", "🥉"];
-      const data = [];
-      snapshot.forEach(child => data.push(child.val()));
-      data.reverse(); // Firebase враќа lowest-first, па ги превртуваме
+      const data = Object.values(snapshot.val())
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10);
 
       data.forEach((entry, i) => {
         const row = document.createElement("div");
